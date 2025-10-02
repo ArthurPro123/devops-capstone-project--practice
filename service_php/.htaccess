@@ -1,3 +1,9 @@
+
+DirectoryIndex src/index.php  # Needed only for the route that displays 
+                              # the API version and endpoints (.../service_php/),
+														  # as this directory has no index file.
+
+
 RewriteEngine On
 RewriteBase /devops/devops-capstone-project--practice/service_php
 
@@ -6,4 +12,4 @@ Options -Indexes
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /devops/devops-capstone-project--practice/service_php/src/index.php/$1 [L,QSA]
+RewriteRule ^(.*)$ src/index.php/$1 [L,QSA]
