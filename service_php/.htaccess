@@ -1,5 +1,9 @@
 RewriteEngine On
 RewriteBase /devops/devops-capstone-project--practice/service_php
+
+# Disable directory listing
+Options -Indexes
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /devops/devops-capstone-project--practice/service_php/src/index.php/$1 [L,QSA]
