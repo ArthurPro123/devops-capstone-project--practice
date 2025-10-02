@@ -1,41 +1,45 @@
 <?php
 require_once __DIR__ . '/Account.php';
-
 header("Content-Type: application/json");
 
-$account = new Account();
-$method = $_SERVER['REQUEST_METHOD'];
-$request = explode('/', trim($_SERVER['PATH_INFO'], '/'));
-$input = json_decode(file_get_contents('php://input'), true);
+// Extract the path segments
+$path = explode('/', trim($_SERVER['PATH_INFO'], '/'));
+$request_method = $_SERVER['REQUEST_METHOD'];
 
-switch ($method) {
+// Initialize the Account object
+$account = new Account();
+
+// Handle the request
+switch ($request_method) {
     case 'GET':
-        if (isset($request[0]) && is_numeric($request[0])) {
-            // Get account by ID
-            $result = $account->getById($request[0]);
+        if (isset($path[1]) && is_numeric($path[1])) {
+            // GET /accounts/{id}
+            $result = $account->getById($path[1]);
             echo json_encode($result);
         } else {
-            // Get all accounts
+            // GET /accounts
             $result = $account->getAll();
             echo json_encode($result);
         }
         break;
 
     case 'POST':
-        // Create account
+        // POST /accounts
+        $input = json_decode(file_get_contents('php://input'), true);
         $success = $account->create($input['name'], $input['email'], $input['address'], $input['phone_number']);
         echo json_encode(['success' => $success]);
         break;
 
     case 'PUT':
-        // Update account
-        $success = $account->update($request[0], $input['name'], $input['email'], $input['address'], $input['phone_number']);
+        // PUT /accounts/{id}
+        $input = json_decode(file_get_contents('php://input'), true);
+        $success = $account->update($path[1], $input['name'], $input['email'], $input['address'], $input['phone_number']);
         echo json_encode(['success' => $success]);
         break;
 
     case 'DELETE':
-        // Delete account
-        $success = $account->delete($request[0]);
+        // DELETE /accounts/{id}
+        $success = $account->delete($path[1]);
         echo json_encode(['success' => $success]);
         break;
 
