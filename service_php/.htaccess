@@ -1,0 +1,10 @@
+RewriteEngine On
+
+## RewriteBase ../../../devops/devops-capstone-project--practice/service_php
+RewriteBase /devops/devops-capstone-project--practice/service_php
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /src/index.php/$1 [L,QSA]
+
+### RewriteRule ^(.*)$ /service_php/src/index.php/$1 [L,QSA]
