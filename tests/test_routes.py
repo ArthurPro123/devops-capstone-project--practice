@@ -23,6 +23,7 @@ BASE_URL = "/accounts"
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
+
 class TestAccountService(TestCase):
     """Account Service Tests"""
 
@@ -132,3 +133,26 @@ class TestAccountService(TestCase):
             self.assertEqual(response.status_code, status.HTTP_200_OK)
             data = response.get_json()
             self.assertEqual(len(data), 5)
+
+
+    def test_get_account(self):
+            """Reading an account should show the information of a specified account"""
+
+            account = self._create_accounts(1)[0]
+
+            response = self.client.get(
+                f"{BASE_URL}/{account.id}", content_type="application/json"
+            )
+
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+            data = response.get_json()
+            self.assertEqual(data["name"], account.name)
+            # self._assert_two_accounts_are_identical(data, account)
+
+
+        def test_account_not_found(self):
+            """It should not Read an Account that is not found"""
+
+            response = self.client.get(f"{BASE_URL}/0")
+            self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
