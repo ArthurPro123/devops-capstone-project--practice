@@ -3,50 +3,55 @@
 
 # -------------------------------------------------
 # 1. Clone the Repository
-git clone https://github.com/your-username/your-repository.git
-cd your-repository
+	git clone https://github.com/your-username/your-repository.git
+	cd your-repository
 
 # -------------------------------------------------
 # 2. Create a New Branch
-git checkout -b feature-branch
+	git checkout -b feature-branch
 
 # -------------------------------------------------
 # 3. Make Changes
-# Edit files as needed.
+	# Edit files as needed.
 
 # -------------------------------------------------
 # 4. Stage Changes
-git add .
+	git add .
 
 # -------------------------------------------------
 # 5. Commit Changes
-git commit -m "Add new feature or fix bug"
+	git commit -m "Add new feature or fix bug"
 
 # -------------------------------------------------
 # 6. Push Changes to GitHub
-# Use the -u flag to set the upstream reference for the branch
-git push -u origin feature-branch
+	git push -u origin feature-branch
+
+	# Use the -u flag to set the upstream reference for the branch
 
 # -------------------------------------------------
 # 7. Create a Pull Request
-1. Go to your repository on GitHub.
-2. You should see a prompt to compare and pull request. Click on it.
-   (set base = main <-- compare = feature-branch)
-3. (Fill in the title and description for your pull request if necessary)
-4. Click "Create pull request."
+	# 1. Go to your repository on GitHub.
+	# 2. You should see a prompt to compare and pull request. Click on it.
+
+		 # Additional Information:
+			 # set base = main <-- compare = feature-branch
+			 # if necessary, fill in the title and description for your pull request.
+			 # The changed files are shown at the bottom of the page.
+
+	# 3. Click "Create pull request."
 
 
 # -------------------------------------------------
 # 8. Review and Merge
-1. Other team members can review your pull request.
-2. Once approved, you or a team member with merge permissions can merge the pull request into the main branch.
+	# 1. Other team members can review your pull request.
+	# 2. Once approved, you or a team member with merge permissions can merge the pull request into the main branch.
 
 # -------------------------------------------------
 # 9. Update Local Repository
-git checkout main
-git pull origin main
+	git checkout main
+	git pull origin main
 
 # -------------------------------------------------
 # 10. Delete the Feature Branch
-git branch -d feature-branch
-git push origin --delete feature-branch
+	git branch -d feature-branch
+	git push origin --delete feature-branch
