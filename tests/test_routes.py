@@ -172,8 +172,8 @@ class TestAccountService(TestCase):
         """It should Update an existing Account"""
         # create an Account to update
 
-        test_account = AccountFactory()
-        response = self.client.post(BASE_URL, json=test_account.serialize())
+        account = AccountFactory()
+        response = self.client.post(BASE_URL, json=account.serialize())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # update the account
@@ -189,6 +189,13 @@ class TestAccountService(TestCase):
         self.assertEqual(updated_account["name"], "Something Known")
 
 
+    def test_account_not_found_when_updating_account(self):
+        """It should return 404 NOT FOUND when updating a non-existent account"""
+        account = AccountFactory()
+        response = self.client.put(f"{BASE_URL}/0", json=account.serialize())
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
     def test_delete_account(self):
         """It should Delete an Account"""
         account = self._create_accounts(1)[0]
@@ -198,3 +205,10 @@ class TestAccountService(TestCase):
         # Try to get the deleted account
         response = self.client.get( f"{BASE_URL}/{account.id}")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+    def test_method_not_allowed(self):
+        """It should not allow an illegal method call"""
+        response = self.client.delete(BASE_URL)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        self.assertIn("Method Not Allowed", response.data.decode(), "Expected 'Method Not Allowed' in response content")
