@@ -31,8 +31,9 @@ git push -u origin feature-branch
 # 7. Create a Pull Request
 1. Go to your repository on GitHub.
 2. You should see a prompt to compare and pull request. Click on it.
-   # (set head = my-feature-branch, base = main)
-3. Fill in the title and description for your pull request, then click "Create pull request."
+   (set base = main <-- compare = feature-branch)
+3. (Fill in the title and description for your pull request if necessary)
+4. Click "Create pull request."
 
 
 # -------------------------------------------------
