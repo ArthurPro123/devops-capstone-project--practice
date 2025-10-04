@@ -71,6 +71,16 @@ class TestAccountService(TestCase):
             accounts.append(account)
         return accounts
 
+
+    # Added to the orginal:
+    def _assert_two_accounts_are_identical(self, a, b):
+        self.assertEqual(a["name"], b.name)
+        self.assertEqual(a["email"], b.email)
+        self.assertEqual(a["address"], b.address)
+        self.assertEqual(a["phone_number"], b.phone_number)
+        self.assertEqual(a["date_joined"], str(b.date_joined))
+
+
     ######################################################################
     #  A C C O U N T   T E S T   C A S E S
     ######################################################################
@@ -147,8 +157,8 @@ class TestAccountService(TestCase):
             self.assertEqual(response.status_code, status.HTTP_200_OK)
 
             data = response.get_json()
-            self.assertEqual(data["name"], account.name)
-            # self._assert_two_accounts_are_identical(data, account)
+            # self.assertEqual(data["name"], account.name)
+            self._assert_two_accounts_are_identical(data, account)
 
 
         def test_account_not_found(self):
@@ -177,3 +187,16 @@ class TestAccountService(TestCase):
             )
             updated_account = response.get_json()
             self.assertEqual(updated_account["name"], "Something Known")
+
+
+        def test_delete_account(self):
+            """It should Delete an Account"""
+            account = self._create_accounts(1)[0]
+            response = self.client.delete(f"{BASE_URL}/{account.id}")
+            self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+            response = self.client.get(
+                f"{BASE_URL}/{account.id}", content_type="application/json"
+            )
+
+            self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
