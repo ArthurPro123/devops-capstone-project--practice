@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+
+export GITHUB_ACCOUNT=ArthurPro123 # Put here, instead of in the prompt.
+
 echo "****************************************"
 echo " Setting up Capstone Environment"
 echo "****************************************"

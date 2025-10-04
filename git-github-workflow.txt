@@ -1,0 +1,51 @@
+
+# Typical Git and GitHub Workflow
+
+# -------------------------------------------------
+# 1. Clone the Repository
+git clone https://github.com/your-username/your-repository.git
+cd your-repository
+
+# -------------------------------------------------
+# 2. Create a New Branch
+git checkout -b feature-branch
+
+# -------------------------------------------------
+# 3. Make Changes
+# Edit files as needed.
+
+# -------------------------------------------------
+# 4. Stage Changes
+git add .
+
+# -------------------------------------------------
+# 5. Commit Changes
+git commit -m "Add new feature or fix bug"
+
+# -------------------------------------------------
+# 6. Push Changes to GitHub
+# Use the -u flag to set the upstream reference for the branch
+git push -u origin feature-branch
+
+# -------------------------------------------------
+# 7. Create a Pull Request
+1. Go to your repository on GitHub.
+2. You should see a prompt to compare and pull request. Click on it.
+   # (set head = my-feature-branch, base = main)
+3. Fill in the title and description for your pull request, then click "Create pull request."
+
+
+# -------------------------------------------------
+# 8. Review and Merge
+1. Other team members can review your pull request.
+2. Once approved, you or a team member with merge permissions can merge the pull request into the main branch.
+
+# -------------------------------------------------
+# 9. Update Local Repository
+git checkout main
+git pull origin main
+
+# -------------------------------------------------
+# 10. Delete the Feature Branch
+git branch -d feature-branch
+git push origin --delete feature-branch
