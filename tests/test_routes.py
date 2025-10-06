@@ -45,6 +45,8 @@ class TestAccountService(TestCase):
         db.session.query(Account).delete()  # clean up the last tests
         db.session.commit()
 
+        # Initialize a test client for the Flask app to simulate HTTP requests
+        # without starting a live server, allowing for isolated and fast testing:
         self.client = app.test_client()
 
     def tearDown(self):
