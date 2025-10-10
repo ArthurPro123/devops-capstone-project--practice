@@ -11,7 +11,8 @@ spec:
       type: string
   steps:
     - name: echo-message
-      image: alpine:3
+      # image: alpine:3
+      image: busybox:latest
       command: [/bin/echo]
       args: ["$(params.message)"]
 ---
@@ -25,7 +26,8 @@ spec:
     - name: source
   steps:
     - name: remove
-      image: alpine:3
+      # image: alpine:3
+      image: busybox:latest
       env:
         - name: WORKSPACE_SOURCE_PATH
           value: $(workspaces.source.path)
