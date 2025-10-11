@@ -15,6 +15,7 @@ spec:
     - name: repo-url
     - name: branch
       default: main
+
   tasks:
     - name: init
       workspaces:
@@ -36,3 +37,15 @@ spec:
         value: $(params.branch)
       runAfter:
         - init
+
+
+
+
+    # Playing with the echo task:
+    - name: echo-step               # <-- pipeline‑level name
+      taskRef:
+        name: echo                  # <-- refers to the Task defined in tasks.yaml
+      params:
+        - name: message
+          ## value: "$(params.echo-message)"   # bind pipeline param to task param
+          value: "Using busyMocks setup"   # <-- direct value, no $(params…) indirection
