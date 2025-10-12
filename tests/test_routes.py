@@ -208,7 +208,7 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         # Try to get the deleted account
-        response = self.client.get( f"{BASE_URL}/{account.id}")
+        response = self.client.get(f"{BASE_URL}/{account.id}")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 

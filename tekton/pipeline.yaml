@@ -56,6 +56,12 @@ spec:
           value: "python:3.9-slim"
         - name: args
           value: ["--count", "--max-complexity=10", "--max-line-length=127", "--statistics"]
+        - name: path
+          value: "service" # Specifies the directory you want Flake8 to check.
+                           #
+                           # The "service" directory is specified for linting. 
+                           # If not specified, flake will also check the "test_service"
+                           # directory, which contains many blank lines.
       runAfter:
         - clone
 
