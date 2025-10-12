@@ -25,6 +25,7 @@ spec:
       taskRef:
         name: cleanup
 
+
     - name: clone
       workspaces:
         - name: output  # Expects a workspace named "output".
@@ -36,27 +37,28 @@ spec:
       taskRef:
         name: git-clone
       params:
-      - name: url
-        value: $(params.repo-url)
-      - name: revision
-        value: $(params.branch)
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.branch)
       runAfter:
         - init
 
 
- - name: lint
+    - name: lint
       workspaces:
         - name: source
-          workspace: pipeline-workspace          
+          workspace: pipeline-workspace
       taskRef:
         name: flake8
       params:
-      - name: image
-        value: "python:3.9-slim"
-      - name: args
-        value: ["--count", "--max-complexity=10", "--max-line-length=127", "--statistics"]
+        - name: image
+          value: "python:3.9-slim"
+        - name: args
+          value: ["--count", "--max-complexity=10", "--max-line-length=127", "--statistics"]
       runAfter:
         - clone
+
 
     - name: tests
       workspaces:
@@ -71,6 +73,7 @@ spec:
         value: "-v --with-spec --spec-color"
       runAfter:
         - clone
+
 
     - name: build
       workspaces:
@@ -92,6 +95,7 @@ spec:
       runAfter:
         - tests
         - lint
+
 
     - name: deploy
       workspaces:
