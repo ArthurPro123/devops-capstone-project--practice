@@ -137,5 +137,29 @@ Licensed under the Apache License. See [LICENSE](LICENSE)
 
 ## Additional Notes
 
-Use the honcho start command to start your microservice listening on port 5000
-honcho start
+Use the `honcho start` command to start your microservice 
+listening on port 5000 after cloning (without using Docker):
+
+    ```sh
+    honcho start
+
+    #or
+
+    make run
+    ```
+
+Create an account for playing around:
+
+    ```sh
+    curl -X POST -H "Content-Type: application/json" -d '{
+        "name": "John Doe",
+        "email": "john@example.com",
+        "address": "123 Main St",
+        "phone_number": "555-1234"
+    }' https://arthurssl-5000.theiaopenshiftnext-0-labs-prod-theiaopenshift-4-tor01.proxy.cognitiveclass.ai/accounts
+
+See that it was added:
+
+    ```sh
+    curl https://arthurssl-5000.theiaopenshiftnext-0-labs-prod-theiaopenshift-4-tor01.proxy.cognitiveclass.ai/accounts
+    ```

@@ -1,3 +1,11 @@
+#
+# The contents of this file were initially generated 
+# following instructions in the 'd_1_...' file.
+#
+# NOTE: The Tekton pipeline's deploy task copies this file 
+# and replaces the IMAGE_NAME_HERE placeholder 
+# using the `sed` utility.
+#
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,8 +26,11 @@ spec:
         app: accounts
     spec:
       containers:
-      # - image: us.icr.io/sn-labs-arthurssl/accounts:1 # Was used for manual deployment.
-      - image: IMAGE_NAME_HERE # Used with CD.
+      # - image: us.icr.io/sn-labs-arthurssl/accounts:1  # Hardcoded image for manual deployments 
+			                                                   # (not used by Tekton).
+
+      - image: IMAGE_NAME_HERE  # Placeholder replaced by the Tekton pipeline's deploy task 
+			                          # using the `sed` utility.
         name: accounts
         resources: {}
         env:

@@ -20,14 +20,18 @@ spec:
   tasks:
     - name: init
       workspaces:
-        - name: source
+        - name: source  #  Expects a workspace named "source".
           workspace: pipeline-workspace          
       taskRef:
         name: cleanup
 
     - name: clone
       workspaces:
-        - name: output
+        - name: output  # Expects a workspace named "output".
+          #
+          # The names source and output are task-specific 
+          # and only matter within the context of the task.
+         
           workspace: pipeline-workspace          
       taskRef:
         name: git-clone
@@ -38,6 +42,7 @@ spec:
         value: $(params.branch)
       runAfter:
         - init
+
 
  - name: lint
       workspaces:
@@ -77,6 +82,13 @@ spec:
       params:
       - name: IMAGE
         value: "$(params.build-image)"
+        
+        # The `buildah` task’s spec requires the `IMAGE` parameter
+        # to specify the name/tag of the image to build.
+        #
+        # When it runs, it builds the container and pushes it 
+        # to the specified registry.
+
       runAfter:
         - tests
         - lint
@@ -87,6 +99,15 @@ spec:
           workspace: pipeline-workspace          
       taskRef:
         name: openshift-client
+        #
+        # The openshift-client task ensures that oc commands are
+        # executed in a predefined environment with the correct permissions,
+        # credentials, and tools.
+        #
+        # Running shell scripts directly would require manually setting up a
+        # container with the right tools, permissions, and environment
+        # variables.
+        
         kind: ClusterTask
       params:
       - name: SCRIPT
@@ -96,10 +117,17 @@ spec:
 
           echo "Updating manifest..."
           sed -i "s:IMAGE_NAME_HERE:$(params.build-image):g" deploy/deployment.yaml
+          #
+          # Replaces IMAGE_NAME_HERE with $(params.build-image), 
+          # the same image reference used in the build task.
+
           cat deploy/deployment.yaml
+
           echo "Deploying to OpenShift..."
           oc apply -f deploy/
+
           oc get pods -l app=accounts
+
       runAfter:
         - build
 
