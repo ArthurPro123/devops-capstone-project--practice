@@ -124,7 +124,7 @@ spec:
           cp -v deploy/deployment.yaml.template deploy/deployment.yaml
 
           echo "Updating manifest..."
-          sed -i "s:IMAGE_NAME_HERE:$(params.build-image):g" deploy/deployment.yaml
+          sed -i "s|IMAGE_NAME_HERE|$(params.build-image)|g" deploy/deployment.yaml
           #
           # Replaces IMAGE_NAME_HERE with $(params.build-image), 
           # the same image reference used in the build task.
