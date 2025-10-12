@@ -141,7 +141,8 @@ spec:
           oc get pods -l app=accounts
 
       runAfter:
-        - build
+        ## - build
+        - clone
 
 
 
