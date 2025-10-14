@@ -36,7 +36,7 @@ echo "export PATH_TO_DEPLOYMENT_MANIFEST=$PATH_TO_DEPLOYMENT_MANIFEST" >> ~/.bas
 
 
 ## echo 'export PS1="\[\e]0;\u:\W\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ "' >> ~/.bashrc
-#
+
 # A shorter variant:
 echo 'export PS1="[\[\033[01;32m\]\u\[\033[00m\]: \[\033[01;34m\]\W\[\033[00m\]]\$ "' >> ~/.bashrc
 

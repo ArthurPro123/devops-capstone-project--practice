@@ -107,15 +107,6 @@ spec:
           workspace: pipeline-workspace          
       taskRef:
         name: openshift-client
-        #
-        # The openshift-client task ensures that oc commands are
-        # executed in a predefined environment with the correct permissions,
-        # credentials, and tools.
-        #
-        # Running shell scripts directly would require manually setting up a
-        # container with the right tools, permissions, and environment
-        # variables.
-        
         kind: ClusterTask
       params:
       - name: SCRIPT
@@ -124,22 +115,15 @@ spec:
           cp -v deploy/deployment.yaml.template deploy/deployment.yaml
 
           echo "Updating manifest..."
-          
-          # Use '|' as a delimiter in sed to avoid conflicts 
-          # with colons (:) in the parameter value:
-         
-          sed -i "s|IMAGE_NAME_HERE|$(params.build-image)|g" deploy/deployment.yaml
+          sed -i "s|IMAGE_NAME_HERE|$(params.build-image)|" deploy/deployment.yaml
           #
           # Replaces IMAGE_NAME_HERE with $(params.build-image), 
-          # the same image reference used in the build task.
 
           cat deploy/deployment.yaml
 
           echo "Deploying to OpenShift..."
           oc apply -f deploy/
-
           oc get pods -l app=accounts
-
       runAfter:
         ## - build
         - clone
