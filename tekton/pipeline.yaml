@@ -1,8 +1,3 @@
-#
-# This pipeline needs the following tasks from Tekton Hub
-#   - git-clone
-#   - flake8
-#
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
@@ -43,64 +38,6 @@ spec:
           value: $(params.branch)
       runAfter:
         - init
-
-
-    - name: lint
-      workspaces:
-        - name: source
-          workspace: pipeline-workspace
-      taskRef:
-        name: flake8
-      params:
-        - name: image
-          value: "python:3.9-slim"
-        - name: args
-          value: ["--count", "--max-complexity=10", "--max-line-length=127", "--statistics"]
-        - name: path
-          value: "service"  # The "service" directory is specified for linting. 
-                            # If not specified, flake will also check the "test_service"
-                            # directory, which contains many blank lines.
-      runAfter:
-        - clone
-
-
-    - name: tests
-      workspaces:
-        - name: source
-          workspace: pipeline-workspace          
-      taskRef:
-        name: nose
-      params:
-      - name: database_uri
-        value: "sqlite:///test.db"
-      - name: args
-        value: "-v --with-spec --spec-color"
-      runAfter:
-        - clone
-
-
-    - name: build
-      workspaces:
-        - name: source
-          workspace: pipeline-workspace          
-      taskRef:
-        name: buildah
-        kind: ClusterTask
-      params:
-      - name: IMAGE
-        value: "$(params.build-image)"
-        
-        # The `buildah` task’s spec requires the `IMAGE` parameter
-        # to specify the name/tag of the image to build.
-        #
-        # When it runs, it builds the container and pushes it 
-        # to the specified registry.
-
-      runAfter:
-        - tests
-        - lint
-
-
     - name: deploy
       workspaces:
         - name: manifest-dir
@@ -116,6 +53,12 @@ spec:
 
           echo "Updating manifest..."
           sed -i "s|IMAGE_NAME_HERE|$(params.build-image)|" deploy/deployment.yaml
+          echo
+          echo
+          echo "Show SSS edited file:"
+          cat deploy/deployment.yaml | grep 'image:'
+          echo 
+          echo
           #
           # Replaces IMAGE_NAME_HERE with $(params.build-image), 
 
@@ -125,16 +68,4 @@ spec:
           oc apply -f deploy/
           oc get pods -l app=accounts
       runAfter:
-        ## - build
         - clone
-
-
-
-    # Playing with the echo task:
-    - name: echo-step               # <-- pipeline‑level name
-      taskRef:
-        name: echo                  # <-- refers to the Task defined in tasks.yaml
-      params:
-        - name: message
-          ### value: "$(params.echo-message)"   # bind pipeline param to task param
-          value: "Using BusyBox instead of Alpine for the echo task"   # <-- direct value, no $(params…) indirection
