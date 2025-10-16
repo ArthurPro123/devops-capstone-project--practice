@@ -7,6 +7,18 @@ define('DB_USER', getenv('DB_USER') ?: 'root');
 define('DB_PASS', getenv('DB_PASS') ?: '');
 define('DB_NAME', getenv('DB_NAME') ?: 'account_microservice_db');
 
+
+if (in_array($host, array('local', '127.0', '192.1'))) {
+	DEFINE('LOCAL', true);
+} else {
+	DEFINE('LOCAL', false);
+}
+
+if (!LOCAL && (DB_PASS === '') ) {
+	die("DB_PASS equals '' when !LOCAL is true");
+}
+
+
 // Create connection
 function getDBConnection() {
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);

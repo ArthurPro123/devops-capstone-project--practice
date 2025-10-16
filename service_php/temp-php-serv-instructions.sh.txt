@@ -8,6 +8,16 @@ cd service_php
 docker build -t accounts_php_image .
 
 
+# # Try:
+docker volume create my_volume
+
+docker run --rm \
+	-d \
+  -v my_volume:/var/www/html \
+  -p 8080:80 \
+  accounts_php_image
+
+
 # --- Run a Docker container for the PHP application with Apache ---
 
 docker run --rm -d -p 8080:80 accounts_php_image
