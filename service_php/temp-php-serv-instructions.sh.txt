@@ -1,0 +1,43 @@
+#!/bin/bash
+
+
+# --- STEP 5: Build the PHP Docker image ---
+
+echo "Building the PHP Docker image..."
+cd service_php
+docker build -t accounts_php .
+cd ..
+
+
+# --- STEP 6: Start the MySQL container ---
+
+echo "Starting MySQL container..."
+make db
+
+
+# --- STEP 7: Initialize the database (optional) ---
+
+echo "Initializing the database..."
+make dbinit
+
+
+# --- STEP 8: Run the PHP service ---
+
+echo "Starting the PHP service..."
+make run
+
+
+# --- STEP 9: Verify the service is running ---
+
+echo "Verifying the service..."
+sleep 5  # Wait for the service to start
+curl -s http://localhost:8080/health | jq
+
+
+# --- STEP 10: Instructions for stopping and cleaning up ---
+
+echo
+echo "Your PHP service is now running at http://localhost:8080"
+echo
+echo "To stop and clean up, run:"
+echo "  cd service_php && make clean"

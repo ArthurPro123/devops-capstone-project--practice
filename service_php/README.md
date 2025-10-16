@@ -1,10 +1,6 @@
 # PHP Account Service
 A PHP microservice for managing accounts, using MySQL.
 
-## Setup
-1. Ensure MySQL is running at `/opt/lampp/mysql`.
-2. Run the setup script to create the database, user, and tables.
-
 ## API Endpoints
 - `GET /devops/devops-capstone-project--practice/service_php/accounts`: List all accounts.
 - `GET /devops/devops-capstone-project--practice/service_php/accounts/{id}`: Get account by ID.
