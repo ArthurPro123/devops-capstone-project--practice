@@ -33,8 +33,25 @@ WORKDIR /var/www/html
 # -------------------------------------------------
 # Copy source files with correct ownership
 # -------------------------------------------------
-COPY --chown=${USER}:${USER} src/ ./src/
-COPY --chown=${USER}:${USER} config/ ./config/
+COPY --chown=${USER}:${USER} src/     ./src/
+COPY --chown=${USER}:${USER} config/  ./config/
+
+ARG ENVIRONMENT=prod
+
+# Copy the .htaccess file
+COPY --chown=${USER}:${USER} .htaccess.${ENVIRONMENT}  .htaccess
+
+# #
+# Override `Options -Indexes` (in .htaccess) that disables directory listing,
+# by copying the custom Apache config file to reveal directories (for debugging):
+# #
+COPY apache-config.conf.${ENVIRONMENT}  /etc/apache2/sites-available/000-default.conf
+
+
+# -------------------------------------------------
+# Change ownership to the Apache user
+# -------------------------------------------------
+# # RUN chown -R www-data:www-data /var/www/html
 
 # -------------------------------------------------
 # Switch to the non‑root user for runtime

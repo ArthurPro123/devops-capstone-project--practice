@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-require_once PROJECT_ROOT . '/tests_php/factories/AccountFactory.php';
+require_once PROJECT_ROOT . '/tests/factories/AccountFactory.php';
 
 class AccountTest extends TestCase
 {
