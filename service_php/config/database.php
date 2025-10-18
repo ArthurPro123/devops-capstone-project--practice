@@ -8,6 +8,7 @@ define('DB_PASS', getenv('DB_PASS') ?: '');
 define('DB_NAME', getenv('DB_NAME') ?: 'account_microservice_db');
 
 
+$host = substr($_SERVER['HTTP_HOST'], 0, 5);
 if (in_array($host, array('local', '127.0', '192.1'))) {
 	DEFINE('LOCAL', true);
 } else {

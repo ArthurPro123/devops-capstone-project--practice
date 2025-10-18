@@ -10,7 +10,12 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         default-mysql-client \
         ca-certificates \
-        curl && \
+        curl \
+        libmariadb-dev-compat && \
+				### libmariadb-dev-compat && \  # Not needed for standard MySQL connections
+    docker-php-ext-install mysqli && \
+    docker-php-ext-enable mysqli && \
+		### docker-php-ext-enable mysqli && \  # Not needed; `docker-php-ext-install` already enables the extension
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # -------------------------------------------------
@@ -36,7 +41,7 @@ WORKDIR /var/www/html
 COPY --chown=${USER}:${USER} src/     ./src/
 COPY --chown=${USER}:${USER} config/  ./config/
 
-ARG ENVIRONMENT=prod
+ARG ENVIRONMENT=production
 
 # Copy the .htaccess file
 COPY --chown=${USER}:${USER} .htaccess.${ENVIRONMENT}  .htaccess

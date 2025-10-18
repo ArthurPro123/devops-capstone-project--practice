@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  php:
+    volumes:
+      #
+      # Overrides those files in Dockerfile during development for live reloading.
+      # Might be useful to have for 
+      # * Active development
+      # * Debugging
+      #
+      - ./src:/var/www/html/src
+      - ./config:/var/www/html/config
+      - ./.htaccess.production:/var/www/html/.htaccess
+      - ./apache-config.conf.production:/etc/apache2/sites-available/000-default.conf
