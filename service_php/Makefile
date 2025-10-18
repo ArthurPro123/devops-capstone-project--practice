@@ -40,9 +40,12 @@
 
 #---
 
-.PHONY: run-development
-run-development: ## Start MySQL and PHP services
-	@echo "Starting services..."
+## .PHONY: run-development
+## run-development: ## Start MySQL and PHP services
+
+.PHONY: run
+run ## Start MySQL and PHP services
+	@echo "Starting services... (dev)"
 	@docker-compose --env-file env/.env.development up -d
 
 .PHONY: run-staging
