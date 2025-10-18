@@ -1,0 +1,94 @@
+name: CI Build (PHP)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: php:8.2-apache
+
+    # Define environment variables at the job level
+    env:
+      DB_HOST: mysql
+      DB_USER: db_user_1
+      DB_PASS: mySecurePassword354_352
+      DB_NAME: testdb
+      DB_ROOT_PASS: mysqls3cr3t
+      MYSQL_PORT: 3306
+
+    services:
+      mysql:
+        image: mysql:8.0
+        ports:
+          - ${{ env.MYSQL_PORT }}:${{ env.MYSQL_PORT }}
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_ROOT_PASS }}
+          MYSQL_DATABASE: ${{ env.DB_NAME }}
+          MYSQL_USER: ${{ env.DB_USER }}
+          MYSQL_PASSWORD: ${{ env.DB_PASS }}
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          apt-get update && apt-get install -y default-mysql-client
+          docker-php-ext-install pdo pdo_mysql
+          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Set up database configuration
+        run: |
+          echo "<?php
+          define('DB_HOST', '${{ env.DB_HOST }}');
+          define('DB_USER', '${{ env.DB_USER }}');
+          define('DB_PASS', '${{ env.DB_PASS }}');
+          define('DB_NAME', '${{ env.DB_NAME }}');
+
+          function getDBConnection() {
+              \$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+              if (\$conn->connect_error) {
+                  die(\"Connection failed: \" . \$conn->connect_error);
+              }
+              return \$conn;
+          }
+          ?>" > service_php/config/database.php
+
+      - name: Initialize database
+        run: |
+          while ! mysqladmin ping -h"${{ env.DB_HOST }}" --silent; do
+              sleep 1
+          done
+          mysql -h ${{ env.DB_HOST }} -u ${{ env.DB_USER }} -p${{ env.DB_PASS }} ${{ env.DB_NAME }} << 'EOF'
+          CREATE TABLE IF NOT EXISTS accounts (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              name VARCHAR(64) NOT NULL,
+              email VARCHAR(64) NOT NULL,
+              address VARCHAR(256) NOT NULL,
+              phone_number VARCHAR(32),
+              date_joined DATE NOT NULL DEFAULT CURRENT_DATE
+          );
+          EOF
+
+      - name: Lint with PHP_CodeSniffer
+        run: |
+          composer global require squizlabs/php_codesniffer
+          phpcs --standard=PSR12 service_php/src/
+
+      - name: Run unit tests with PHPUnit
+        run: |
+          vendor/bin/phpunit --configuration phpunit.xml --colors=always --testsuite "Unit Tests"
+
+      - name: Run integration tests with PHPUnit
+        run: |
+          vendor/bin/phpunit --configuration phpunit.xml --colors=always --testsuite "Integration Tests"
