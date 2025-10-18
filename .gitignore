@@ -31,6 +31,9 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
+# Allow service_php/env directory
+!service_php/env/
+
 build/
 develop-eggs/
 dist/
