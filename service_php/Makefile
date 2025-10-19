@@ -28,19 +28,6 @@
 
 #---
 
-### # Define variables at the top of the Makefile
-### DB_USER := $(DB_USER)
-### DB_USER := db_user_1
-### DB_PASS := mySecurePassword354_352
-### DB_NAME := account_microservice_db
-### DB_ROOT_PASS := root
-
-### MYSQL_PORT := 3306
-### MYSQL_VOLUME := mysql_data
-
-#---
-
-
 ## .PHONY: run-development
 ## run-development: ## Start MySQL and PHP services
 	@echo "Starting services..."
@@ -66,7 +53,8 @@ init-db: ## Initialize the database (create tables, seed data, etc.)
 # Assumes you have an init-db.sql file in your service_php directory
 #
 	@echo "Initializing database..."
-	@docker-compose exec mysql mysql -uroot -p$(DB_ROOT_PASS) $(DB_NAME) < init-db.sql
+	@docker-compose exec mysql sh -c 'read -s -p "Enter MySQL root password: " DB_ROOT_PASS \
+		&& mysql -uroot -p$DB_ROOT_PASS $(DB_NAME) < init-db.sql'
 
 
 .PHONY: tests

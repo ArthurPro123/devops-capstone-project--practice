@@ -4,7 +4,6 @@
 # The environment variables defined in the selected .env file (specified in the Makefile) 
 # are mapped to the MySQL service in 'docker-compose.yml' as follows:
 #
-#    - MYSQL_ROOT_PASSWORD: Gets its value from ${DB_ROOT_PASS}
 #    - MYSQL_DATABASE:      Gets its value from ${DB_NAME}
 #    - MYSQL_USER:          Gets its value from ${DB_USER}
 #    - MYSQL_PASSWORD:      Gets its value from ${DB_PASS}
