@@ -6,8 +6,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}  # Required for MySQL 8.0
       MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_USER: ${DB_USER}      # Only if you want a non-root user
+      MYSQL_PASSWORD: ${DB_PASS}  # Only if you want a non-root user
     volumes:
       - ${MYSQL_VOLUME}:/var/lib/mysql
     ports:
