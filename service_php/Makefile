@@ -39,9 +39,6 @@ run-staging: ## Start MySQL and PHP services for staging
 	@echo "Starting staging services..."
 	@docker compose --env-file env/.env.staging up -d
 
-## .PHONY: run-production
-## run-production: ## Start MySQL and PHP services for production
-
 .PHONY: run-production  # (Using a shorter command for convenience.)
 run-production: ## Start MySQL and PHP services for production
 	@echo "Starting production services..."
@@ -54,7 +51,7 @@ init-db: ## Initialize the database (create tables, seed data, etc.)
 # Assumes you have an init-db.sql file in your service_php directory
 #
 	@echo "Initializing database..."
-	@docker-compose exec mysql sh -c 'read -s -p "Enter MySQL root password: " DB_ROOT_PASS \
+	@docker compose --env-file env/.env.production exec mysql sh -c 'read -s -p "Enter MySQL root password: " DB_ROOT_PASS \
 		&& mysql -uroot -p$DB_ROOT_PASS $(DB_NAME) < init-db.sql'
 
 
@@ -62,14 +59,14 @@ init-db: ## Initialize the database (create tables, seed data, etc.)
 tests: ## Run PHPUnit tests using host's PHPUnit
 #
 	@echo "Running PHPUnit tests..."
-	@docker-compose exec php /usr/local/bin/php /opt/lampp/bin/phpunit --verbose --colors=always
+	@docker compose exec php /usr/local/bin/php /opt/lampp/bin/phpunit --verbose --colors=always
 #
 
 
 .PHONY: restart-db
 restart-db: ## Restart MySQL in Docker (preserves data)
 	@echo "Restarting MySQL..."
-	@docker-compose restart mysql
+	@docker compose --env-file env/.env.production restart mysql
 
 
 .PHONY: clean-up ## Clean up Docker containers and volumes
@@ -78,4 +75,4 @@ restart-db: ## Restart MySQL in Docker (preserves data)
 # Useful for a fresh start.
 #
 	@echo "Cleaning up..."
-	@docker-compose down -v
+	@docker compose down -v

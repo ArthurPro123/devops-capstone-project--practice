@@ -48,6 +48,8 @@ WORKDIR /var/www/html
 COPY src/     ./src/
 COPY config/  ./config/
 
+COPY init-db.sql  ./
+
 # -------------------------------------------------
 # Environment‑specific files
 # -------------------------------------------------

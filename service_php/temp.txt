@@ -16,6 +16,8 @@ run: ## Start MySQL and PHP services for development
 	@echo "Starting services..."
 	@docker compose --env-file env/.env.development \
 		-f docker-compose.yml -f docker-compose.override.development.yml up -d
+
+
 env/.env.development:
 MYSQL_ROOT_PASSWORD=root
 DB_USER=root
