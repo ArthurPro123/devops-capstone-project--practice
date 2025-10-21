@@ -1,0 +1,46 @@
+
+docker-compose logs service_php-mysql-1
+WARN[0000] The "DB_NAME" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DB_USER" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DB_PASS" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "MYSQL_VOLUME" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "MYSQL_PORT" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DB_USER" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DB_PASS" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DB_NAME" variable is not set. Defaulting to a blank string. 
+invalid spec: :/var/lib/mysql: empty section between colons
+
+
+.PHONY: run
+run: ## Start MySQL and PHP services for development
+	@echo "Starting services..."
+	@docker compose --env-file env/.env.development \
+		-f docker-compose.yml -f docker-compose.override.development.yml up -d
+env/.env.development:
+MYSQL_ROOT_PASSWORD=root
+DB_USER=root
+DB_PASS=
+DB_NAME=account_microservice_db
+MYSQL_PORT=3306
+MYSQL_VOLUME=./mysql_data
+
+
+
+version: '3.8'
+services:
+  mysql:  # The hostname for the mysql service will be the service name itself (mysql)
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}  # Required for MySQL 8.0
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+    volumes:
+      - ${MYSQL_VOLUME}:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10

@@ -4,6 +4,7 @@ services:
   mysql:  # The hostname for the mysql service will be the service name itself (mysql)
     image: mysql:8.0
     environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}  # Required for MySQL 8.0
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASS}
