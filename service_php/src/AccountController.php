@@ -3,7 +3,13 @@ require_once __DIR__ . '/Account.php';
 header("Content-Type: application/json");
 
 // Extract the path segments
-$path = isset($_SERVER['PATH_INFO']) ? explode('/', trim($_SERVER['PATH_INFO'], '/')) : [];
+## $path = isset($_SERVER['PATH_INFO']) ? explode('/', trim($_SERVER['PATH_INFO'], '/')) : [];
+
+// Changed $path to make it work with containers:
+$raw = $_GET['request'] ?? '';
+$path = $raw ? explode('/', trim($raw, '/')) : [];
+
+
 $request_method = $_SERVER['REQUEST_METHOD'];
 
 // Initialize the Account object
