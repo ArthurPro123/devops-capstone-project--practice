@@ -4,6 +4,8 @@ DirectoryIndex src/index.php  # Needed only for the route that displays
 														  # as this directory has no index file.
 
 
+AcceptPathInfo On
+
 RewriteEngine On
 RewriteBase /
 

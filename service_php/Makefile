@@ -69,7 +69,8 @@ restart-db: ## Restart MySQL in Docker (preserves data)
 	@docker compose --env-file env/.env.production restart mysql
 
 
-.PHONY: clean-up ## Clean up Docker containers and volumes
+.PHONY: clean-up
+clean-up: ## Clean up Docker containers and volumes
 # 
 # Stops and removes all containers, networks, and volumes.
 # Useful for a fresh start.
