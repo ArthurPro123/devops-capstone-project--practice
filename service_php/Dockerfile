@@ -47,6 +47,8 @@ WORKDIR /var/www/html
 # -------------------------------------------------
 COPY src/     ./src/
 COPY config/  ./config/
+COPY config/database.php  dd_base.php
+COPY config/database.php  dd_base.php.${ENVIRONMENT}
 
 # -------------------------------------------------
 # Environment‑specific files
