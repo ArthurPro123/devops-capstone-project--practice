@@ -10,6 +10,9 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}  # Only if you want a non-root user
     volumes:
       - ${MYSQL_VOLUME}:/var/lib/mysql
+      #
+      # Mount the init-db.sql file into the container at a known path:
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
     ports:
       - "${MYSQL_PORT}:3306"
     healthcheck:
