@@ -13,3 +13,6 @@ services:
       - ./config:/var/www/html/config
       - ./.htaccess.production:/var/www/html/.htaccess
       - ./apache-config.conf.production:/etc/apache2/sites-available/000-default.conf
+    build:
+      args:
+        ENVIRONMENT: development
