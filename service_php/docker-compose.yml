@@ -18,7 +18,8 @@ services:
       retries: 10
 
   php:
-    build: .
+    build:
+      context: .
       args:
         ENVIRONMENT: production
     ports:

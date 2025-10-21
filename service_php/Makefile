@@ -28,16 +28,16 @@
 
 #---
 
-## .PHONY: run
-## run: ## Start MySQL and PHP services
+.PHONY: run
+run: ## Start MySQL and PHP services for development
 	@echo "Starting services..."
-	@docker-compose --env-file env/.env.development \
-		-f docker-compose.yml -f docker-compose.override.production.yml up -d
+	@docker compose --env-file env/.env.development \
+		-f docker-compose.yml -f docker-compose.override.development.yml up -d
 
 .PHONY: run-staging
 run-staging: ## Start MySQL and PHP services for staging
 	@echo "Starting staging services..."
-	@docker-compose --env-file env/.env.staging up -d
+	@docker compose --env-file env/.env.staging up -d
 
 ## .PHONY: run-production
 ## run-production: ## Start MySQL and PHP services for production
@@ -45,7 +45,7 @@ run-staging: ## Start MySQL and PHP services for staging
 .PHONY: run-production  # (Using a shorter command for convenience.)
 run-production: ## Start MySQL and PHP services for production
 	@echo "Starting production services..."
-	@docker-compose --env-file env/.env.production up -d
+	@docker compose --env-file env/.env.production up -d
 
 .PHONY: init-db
 init-db: ## Initialize the database (create tables, seed data, etc.)
