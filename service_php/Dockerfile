@@ -47,8 +47,6 @@ WORKDIR /var/www/html
 # -------------------------------------------------
 COPY src/     ./src/
 COPY config/  ./config/
-COPY config/database.php  dd_base.php
-COPY config/database.php  dd_base.php.${ENVIRONMENT}
 
 # -------------------------------------------------
 # Environment‑specific files
@@ -73,7 +71,7 @@ RUN if [ "$ENVIRONMENT" = "development" ]; then \
 # -------------------------------------------------
 # Switch to the correct user for runtime
 # -------------------------------------------------
-USER ${USER:-www-data}
+USER www-data
 
 # -------------------------------------------------
 # Expose Apache port
