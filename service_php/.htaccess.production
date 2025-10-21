@@ -5,6 +5,7 @@ DirectoryIndex src/index.php  # Needed only for the route that displays
 
 
 AcceptPathInfo On
+	# Apache now sets PATH_INFO=/accounts (including the slash)
 
 RewriteEngine On
 RewriteBase /
@@ -14,4 +15,4 @@ RewriteBase /
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ src/index.php/$1 [L,QSA]
+RewriteRule ^(.*)$ src/index.php$1 [L,QSA]

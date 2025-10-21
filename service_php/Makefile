@@ -66,7 +66,7 @@ tests: ## Run PHPUnit tests using host's PHPUnit
 .PHONY: restart-db
 restart-db: ## Restart MySQL in Docker (preserves data)
 	@echo "Restarting MySQL..."
-	@docker compose --env-file env/.env.production restart mysql
+	@docker compose --env-file env/.env.production  restart mysql
 
 
 .PHONY: clean-up
@@ -76,4 +76,4 @@ clean-up: ## Clean up Docker containers and volumes
 # Useful for a fresh start.
 #
 	@echo "Cleaning up..."
-	@docker compose down -v
+	@docker compose --env-file env/.env.production  down -v
