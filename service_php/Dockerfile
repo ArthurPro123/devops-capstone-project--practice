@@ -56,7 +56,7 @@ COPY  env/.env.${ENVIRONMENT}  ./env/
 
 # Override `Options -Indexes` (in .htaccess) that disables directory listing,
 # by copying the custom Apache config file to reveal directories (for debugging):
-COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
+COPY config/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 
 # -------------------------------------------------

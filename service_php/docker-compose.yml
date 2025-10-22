@@ -3,12 +3,29 @@ version: '3.8'
 services:
   mysql:  # The hostname for the mysql service will be the service name itself (mysql)
     image: mariadb:lts-alpine
-    image: mysql:8.0
+    env_file:
+      #
+      # `env_file` loads the variables into Docker Compose's environment (for use
+      # in the docker-compose.yml file itself, e.g., for ${VAR} substitutions).
+      #
+    - env/.env.development
+
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS}  # Required for MySQL 8.0
+      #
+      # `environment` passes the variables into the container's environment (so
+      # your PHP app can access them).
+      #
+      MYSQL_USER: ${DB_USER}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      #
+      ## MYSQL_USER: ${DB_USER}      # Only if you want a non-root user
+      ## MYSQL_PASSWORD: ${DB_PASS}  # Only if you want a non-root user
+      #
       MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}      # Only if you want a non-root user
-      MYSQL_PASSWORD: ${DB_PASS}  # Only if you want a non-root user
+      #
+      # Used only in docker-compose.yml:
+      MYSQL_VOLUME=./mysql_data
+
     volumes:
       - ${MYSQL_VOLUME}:/var/lib/mysql
       #
@@ -26,14 +43,25 @@ services:
     build:
       context: .
       args:
-        ENVIRONMENT: production
+        ENVIRONMENT: development
     ports:
       - "8080:80"
     environment:
-      - DB_HOST=mysql
+      - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_NAME=${DB_NAME}
+    volumes:
+      #
+      # Overrides those files in Dockerfile during development for live reloading.
+      # Might be useful to have for 
+      # * Active development
+      # * Debugging
+      #
+      - ./src:/var/www/html/src
+      - ./config:/var/www/html/config
+      - ./.htaccess.production:/var/www/html/.htaccess
+      - ./config/apache-config.conf:/etc/apache2/sites-available/000-default.conf
     depends_on:
       mysql:
         condition: service_healthy

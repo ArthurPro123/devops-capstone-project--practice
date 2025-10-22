@@ -1,5 +1,5 @@
 Rebuild:
-docker compose --env-file env/.env.production build
+docker compose --env-file env/.env.development build
 
 docker exec -it service_php-php-1 /bin/bash
 

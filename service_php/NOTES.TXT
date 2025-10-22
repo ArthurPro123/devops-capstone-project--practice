@@ -6,18 +6,4 @@
 #
 #    - MYSQL_DATABASE:      Gets its value from ${DB_NAME}
 #    - MYSQL_USER:          Gets its value from ${DB_USER}
-#    - MYSQL_PASSWORD:      Gets its value from ${DB_PASS}
-#
-#
-# Additionally, the following variables are used for persistent storage and port mapping:
-#
-# - MYSQL_VOLUME: Set to './mysql_data' in the .env file, 
-#   it creates a persistent volume for MySQL data storage 
-#   by mapping to the container's '/var/lib/mysql'.
-#
-# - MYSQL_PORT:   Set to 3306 in the .env file, it exposes 
-#   MySQL on port 3306 of the host by mapping to the 
-#   container's default MySQL port (3306).
-#
-# This mapping allows for dynamic configuration of the MySQL service based on the
-# environment specified when running the Makefile targets.
+#      ...
