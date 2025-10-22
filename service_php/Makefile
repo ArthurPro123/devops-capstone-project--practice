@@ -28,11 +28,43 @@
 
 #---
 
+# -------------------------------------------------
+# Variables – can be overridden on the command line
+# -------------------------------------------------
+APP_MODE ?= development          # default mode
+export APP_MODE  # Makes Docker Compose see it.
+
+COMPOSE_FILE ?= docker-compose.yml
+
+##COMPOSE = docker compose -f $(COMPOSE_FILE)
+COMPOSE = docker-compose --env-file env/.env.$(APP_MODE) -f $(COMPOSE_FILE)
+#
+# -------------------------------------------------
+# -------------------------------------------------
+
+
 .PHONY: run
 run: ## Starts MySQL and PHP services for development
-	@echo "Starting services..."
-	@docker compose up -d
-	###@docker compose --env-file env/.env.development up -d
+	@echo "Starting services in $(APP_MODE) mode..."
+	$(COMPOSE) up -d
+	###$(COMPOSE) --env-file env/.env.development up -d
+
+.PHONY: stop
+stop:        ## Stop and remove containers, networks & volumes
+	@echo "Stopping $(APP_MODE) stack"
+	$(COMPOSE) down
+
+.PHONY: restart
+restart: stop run   ## Restart the stack
+
+.PHONY: logs
+logs:        ## Tail logs of all services
+	$(COMPOSE) logs -f
+
+.PHONY: ps
+ps:          ## Show running containers
+	$(COMPOSE) ps
+
 
 .PHONY: init-db
 init-db: ## Initializes the database (create tables, seed data, etc.)

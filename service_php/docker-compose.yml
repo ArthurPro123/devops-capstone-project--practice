@@ -3,13 +3,6 @@ version: '3.8'
 services:
   mysql:  # The hostname for the mysql service will be the service name itself (mysql)
     image: mariadb:lts-alpine
-    env_file:
-      #
-      # `env_file` loads the variables into Docker Compose's environment (for use
-      # in the docker-compose.yml file itself, e.g., for ${VAR} substitutions).
-      #
-    - env/.env.development
-
     environment:
       #
       # `environment` passes the variables into the container's environment (so
@@ -23,8 +16,7 @@ services:
       #
       MYSQL_DATABASE: ${DB_NAME}
       #
-      # Used only in docker-compose.yml:
-      MYSQL_VOLUME=./mysql_data
+      MYSQL_VOLUME: ./mysql_data  # Used only in docker-compose.yml.
 
     volumes:
       - ${MYSQL_VOLUME}:/var/lib/mysql
