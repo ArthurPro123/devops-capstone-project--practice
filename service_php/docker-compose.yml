@@ -1,7 +1,8 @@
 version: '3.8'
 
 services:
-  mysql:  # The hostname for the mysql service will be the service name itself (mysql)
+  ## mysql:  # The hostname for the mysql service will be the service name itself (mysql)
+  localhost:  # The hostname for the mysql service.
     image: mariadb:lts-alpine
     environment:
       #
@@ -55,5 +56,6 @@ services:
       - ./.htaccess.production:/var/www/html/.htaccess
       - ./config/apache-config.conf:/etc/apache2/sites-available/000-default.conf
     depends_on:
-      mysql:
+      ## mysql:
+      localhost:
         condition: service_healthy

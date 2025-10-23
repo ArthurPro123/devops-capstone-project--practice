@@ -2,10 +2,12 @@
 
 // Database configuration for PHP service (MySQL)
 // Use environment variables for flexibility
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: '');
-define('DB_NAME', getenv('DB_NAME') ?: 'account_microservice_db');
+define('DB_HOST', getenv('DB_HOST'));
+define('DB_USER', getenv('DB_USER'));
+define('DB_PASS', getenv('DB_PASS'));
+define('DB_NAME', getenv('DB_NAME'));
+
+## echo "DB_USER: " . getenv('DB_USER'); exit;
 
 
 $host = substr($_SERVER['HTTP_HOST'], 0, 5);
