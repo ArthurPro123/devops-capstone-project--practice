@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  ## mysql:  # The hostname for the mysql service will be the service name itself (mysql)
-  localhost:  # The hostname for the mysql service.
+  mysql:  # The hostname for the mysql service will be the service name itself (mysql)
+  ## localhost:  # The hostname for the mysql service.
     image: yobasystems/alpine-mariadb:11.4.8
     environment:
       #
@@ -13,14 +13,15 @@ services:
       #
       MYSQL_USER: ${DB_USER}
       MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_PASSWORD: ${DB_PASS}  # # Added just in case.
       #
       ## MYSQL_USER: ${DB_USER}      # Only if you want a non-root user
       ## MYSQL_PASSWORD: ${DB_PASS}  # Only if you want a non-root user
       #
       MYSQL_DATABASE: ${DB_NAME}
       ##MYSQL_ALLOW_EMPTY_ROOT_PASSWORD: ${MYSQL_ALLOW_EMPTY_ROOT_PASSWORD}
-      MYSQL_ALLOW_EMPTY_ROOT_PASSWORD: yes
-      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+      ###MYSQL_ALLOW_EMPTY_ROOT_PASSWORD: yes
+      ###MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
 
     volumes:
       - ./mysql_data:/var/lib/mysql
@@ -59,6 +60,7 @@ services:
       - ./.htaccess.production:/var/www/html/.htaccess
       - ./config/apache-config.conf:/etc/apache2/sites-available/000-default.conf
     depends_on:
-      ## mysql:
-      localhost:
+      mysql:
         condition: service_healthy
+      ## localhost:
+        ## condition: service_healthy
