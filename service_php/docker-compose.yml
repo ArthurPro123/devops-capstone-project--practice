@@ -3,11 +3,13 @@ version: '3.8'
 services:
   ## mysql:  # The hostname for the mysql service will be the service name itself (mysql)
   localhost:  # The hostname for the mysql service.
-    image: mariadb:lts-alpine
+    image: yobasystems/alpine-mariadb:11.4.8
     environment:
       #
       # `environment` passes the variables into the container's environment (so
       # your PHP app can access them).
+      #
+      # It does not export them as shell environment variables.
       #
       MYSQL_USER: ${DB_USER}
       MYSQL_ROOT_PASSWORD: ${DB_PASS}
@@ -16,11 +18,12 @@ services:
       ## MYSQL_PASSWORD: ${DB_PASS}  # Only if you want a non-root user
       #
       MYSQL_DATABASE: ${DB_NAME}
-      #
-      MYSQL_VOLUME: ./mysql_data  # Used only in docker-compose.yml.
+      ##MYSQL_ALLOW_EMPTY_ROOT_PASSWORD: ${MYSQL_ALLOW_EMPTY_ROOT_PASSWORD}
+      MYSQL_ALLOW_EMPTY_ROOT_PASSWORD: yes
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
 
     volumes:
-      - ${MYSQL_VOLUME}:/var/lib/mysql
+      - ./mysql_data:/var/lib/mysql
       #
       # Mount the init-db.sql file into the container at a known path:
       - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
