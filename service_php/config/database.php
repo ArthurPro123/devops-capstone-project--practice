@@ -42,6 +42,28 @@ if (!LOCAL && (DB_PASS === '') ) {
 	die("DB_PASS equals '' when !LOCAL is true");
 }
 
+// --- Debugging ---
+header("Content-Type: application/json");
+
+$path1 = isset($_SERVER['PATH_INFO']) ? explode('/', trim($_SERVER['PATH_INFO'], '/')) : [];
+$raw = $_GET['request'] ?? '';
+$path2 = $raw ? explode('/', trim($raw, '/')) : [];
+$allow_empty_root_password_value = defined('MYSQL_ALLOW_EMPTY_ROOT_PASSWORD') ? 'yes' : 'no';
+
+echo json_encode([
+		'path1' => $path1,
+		'path2' => $path2,
+		'CONSTANTS' => [
+				'DB_HOST' => DB_HOST,
+				'DB_NAME' => DB_NAME,
+				'DB_USER' => DB_USER,
+				'DB_PASS' => DB_PASS,
+				'MYSQL_PORT' => MYSQL_PORT,
+				'MYSQL_ALLOW_EMPTY_ROOT_PASSWORD' => $allow_empty_root_password_value,
+		]
+]);
+exit;
+// --- End of Debugging ---
 
 // Create connection
 function getDBConnection() {
