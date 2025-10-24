@@ -38,9 +38,6 @@ if (in_array($host, array('local', '127.0', '192.1'))) {
 	DEFINE('LOCAL', false);
 }
 
-if (!LOCAL && (DB_PASS === '') ) {
-	die("DB_PASS equals '' when !LOCAL is true");
-}
 
 // --- Debugging ---
 header("Content-Type: application/json");
@@ -58,7 +55,7 @@ echo json_encode([
 				'DB_NAME' => DB_NAME,
 				'DB_USER' => DB_USER,
 				'DB_PASS' => DB_PASS,
-				'MYSQL_PORT' => MYSQL_PORT,
+				'MYSQL_PORT' => getenv('MYSQL_PORT'),
 				'MYSQL_ALLOW_EMPTY_ROOT_PASSWORD' => $allow_empty_root_password_value,
 		]
 ]);
