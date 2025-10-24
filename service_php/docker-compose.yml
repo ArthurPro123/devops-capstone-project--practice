@@ -43,10 +43,12 @@ services:
     ports:
       - "8080:80"
     environment:
-      - DB_HOST=${DB_HOST}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - DB_NAME=${DB_NAME}
+      - APP_MODE: ${APP_MODE}
+      - MYSQL_PORT: temp_val_test
+      - DB_HOST: ${DB_HOST}
+      - DB_USER: ${DB_USER}
+      - DB_PASS: ${DB_PASS}
+      - DB_NAME: ${DB_NAME}
     volumes:
       #
       # Overrides those files in Dockerfile during development for live reloading.

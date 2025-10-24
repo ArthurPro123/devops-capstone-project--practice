@@ -8,8 +8,10 @@
 # -------------------------------------------------
 # Variables – can be overridden on the command line
 # -------------------------------------------------
+
 ## APP_MODE ?= development          # default mode
 APP_MODE ?= container
+
 export APP_MODE  # Makes Docker Compose see it.
 
 COMPOSE_FILE ?= docker-compose.yml
