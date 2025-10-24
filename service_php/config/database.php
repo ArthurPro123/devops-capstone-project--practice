@@ -1,7 +1,8 @@
 <?php
 
 // Specify the path to your .env file
-$dot_env_file = __DIR__ . '/../' . 'env/.env.' . (getenv('APP_MODE') ?: 'development');
+$dot_env_file = dirname( __DIR__) . '/' 
+	. 'env/.env.' . (getenv('APP_MODE') ?: 'development');
 
 // Check if the file exists
 if (file_exists($dot_env_file)) {
