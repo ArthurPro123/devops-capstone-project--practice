@@ -48,7 +48,8 @@ services:
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
-      MYSQL_PORT: temp_val_test
+
+      MYSQL_PORT: ${MYSQL_PORT}  # Used in the debugging section of the php app.
     volumes:
       #
       # Overrides those files in Dockerfile during development for live reloading.

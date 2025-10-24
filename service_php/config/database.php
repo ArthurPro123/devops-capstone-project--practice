@@ -49,23 +49,21 @@ define('DB_NAME', getenv('DB_NAME'));
 // --- Debugging ---
 header("Content-Type: application/json");
 
-$path1 = isset($_SERVER['PATH_INFO']) ? explode('/', trim($_SERVER['PATH_INFO'], '/')) : [];
 $raw = $_GET['request'] ?? '';
 $path2 = $raw ? explode('/', trim($raw, '/')) : [];
-$allow_empty_root_password_value = defined('MYSQL_ALLOW_EMPTY_ROOT_PASSWORD') ? 'yes' : 'no';
 
 $debugging_information = [
-		'path1' => $path1,
+		'path1' => isset($_SERVER['PATH_INFO']) ? explode('/', trim($_SERVER['PATH_INFO'], '/')) : [],
 		'path2' => $path2,
-		'APP_MODE' => getenv('APP_MODE'),
-		'dot_env_file' => $dot_env_file,
+		'dot_env_file' => isset($dot_env_file) ? $dot_env_file : 'is not set',
 		'CONSTANTS' => [
-				'DB_HOST' => DB_HOST,
-				'DB_NAME' => DB_NAME,
-				'DB_USER' => DB_USER,
-				'DB_PASS' => DB_PASS,
-				'MYSQL_PORT' => getenv('MYSQL_PORT'),
-				'MYSQL_ALLOW_EMPTY_ROOT_PASSWORD' => $allow_empty_root_password_value,
+				'(env) APP_MODE'   => getenv('APP_MODE'),
+				'(env) DB_HOST'    => getenv('DB_HOST'),
+				'(env) DB_NAME'    => getenv('DB_NAME'),
+				'(env) DB_USER'    => getenv('DB_USER'),
+				'(env) DB_PASS'    => getenv('DB_PASS'),
+				'(env) MYSQL_PORT' => getenv('MYSQL_PORT'),
+				'(env) MYSQL_ALLOW_EMPTY_ROOT_PASSWORD' => getenv('MYSQL_ALLOW_EMPTY_ROOT_PASSWORD'),
 		]
 ];
 
