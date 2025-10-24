@@ -39,7 +39,7 @@ services:
     build:
       context: .
       # args:
-      #   ENVIRONMENT: production # (Is set to container in Dockerfile)
+        # APP_MODE: ${APP_MODE:production}
     ports:
       - "8080:80"
     environment:

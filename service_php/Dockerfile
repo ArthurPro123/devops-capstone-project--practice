@@ -4,7 +4,7 @@
 FROM php:8.2-apache
 
 
-ARG ENVIRONMENT=container  # Might be overriden in the docker-compose file.
+# # ARG ENVIRONMENT=container  # Might be overriden in the docker-compose file.
 
 
 # -------------------------------------------------
@@ -30,7 +30,7 @@ RUN a2enmod rewrite
 # -------------------------------------------------
 ARG UID=1000
 ARG USER=dev_user
-RUN if [ "$ENVIRONMENT" = "development" ]; then \
+RUN if [ "$APP_MODE" = "development" ]; then \
         useradd --uid ${UID} ${USER} && \
         usermod -aG www-data ${USER}; \
     fi
@@ -50,8 +50,8 @@ COPY config/  ./config/
 # -------------------------------------------------
 # Environment‑specific files
 # -------------------------------------------------
-COPY .htaccess.${ENVIRONMENT}  .htaccess
-COPY  env/.env.${ENVIRONMENT}  ./env/
+COPY .htaccess.${APP_MODE}  .htaccess
+COPY  env/.env.${APP_MODE}  ./env/
 
 # Override `Options -Indexes` (in .htaccess) that disables directory listing,
 # by copying the custom Apache config file to reveal directories (for debugging):
@@ -61,7 +61,7 @@ COPY config/apache-config.conf /etc/apache2/sites-available/000-default.conf
 # -------------------------------------------------
 # Change ownership to the correct user
 # -------------------------------------------------
-RUN if [ "$ENVIRONMENT" = "development" ]; then \
+RUN if [ "$APP_MODE" = "development" ]; then \
         chown -R ${USER}:www-data .; \
     else \
         chown -R www-data:www-data .; \
