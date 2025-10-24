@@ -39,16 +39,16 @@ services:
     build:
       context: .
       # args:
-        # APP_MODE: ${APP_MODE:production}
+        # APP_MODE: ${APP_MODE:container}
     ports:
       - "8080:80"
     environment:
       APP_MODE: ${APP_MODE}
-      MYSQL_PORT: temp_val_test
       DB_HOST: ${DB_HOST}
       DB_USER: ${DB_USER}
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
+      MYSQL_PORT: temp_val_test
     volumes:
       #
       # Overrides those files in Dockerfile during development for live reloading.

@@ -30,7 +30,7 @@ RUN a2enmod rewrite
 # -------------------------------------------------
 ARG UID=1000
 ARG USER=dev_user
-RUN if [ "$APP_MODE" = "development" ]; then \
+RUN if [ "$APP_MODE" = "container" ]; then \
         useradd --uid ${UID} ${USER} && \
         usermod -aG www-data ${USER}; \
     fi
@@ -61,7 +61,7 @@ COPY config/apache-config.conf /etc/apache2/sites-available/000-default.conf
 # -------------------------------------------------
 # Change ownership to the correct user
 # -------------------------------------------------
-RUN if [ "$APP_MODE" = "development" ]; then \
+RUN if [ "$APP_MODE" = "container" ]; then \
         chown -R ${USER}:www-data .; \
     else \
         chown -R www-data:www-data .; \
