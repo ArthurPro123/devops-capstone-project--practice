@@ -9,10 +9,9 @@
 # Variables – can be overridden on the command line
 # -------------------------------------------------
 
-## APP_MODE ?= development          # default mode
-APP_MODE ?= container
+APP_MODE ?= container          # default mode
 
-export APP_MODE  # Makes Docker Compose see it.
+export APP_MODE
 
 COMPOSE_FILE ?= docker-compose.yml
 
@@ -26,7 +25,6 @@ COMPOSE = docker compose --env-file env/.env.$(APP_MODE) -f $(COMPOSE_FILE)
 run: ## Starts MySQL and PHP services for development
 	@echo "Starting services in $(APP_MODE) mode..."
 	$(COMPOSE) up -d
-	###$(COMPOSE) --env-file env/.env.development up -d
 
 .PHONY: clean-up
 clean-up: ## Cleans up Docker containers and volumes

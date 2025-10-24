@@ -1,7 +1,7 @@
 <?php
 
 // Specify the path to your .env file
-$dot_env_file = __DIR__ . '/../' . 'env/.env.development';
+$dot_env_file = __DIR__ . '/../' . 'env/.env.' . (getenv('APP_MODE') ?: 'development');
 
 // Check if the file exists
 if (file_exists($dot_env_file)) {
@@ -50,6 +50,8 @@ $allow_empty_root_password_value = defined('MYSQL_ALLOW_EMPTY_ROOT_PASSWORD') ? 
 echo json_encode([
 		'path1' => $path1,
 		'path2' => $path2,
+		'APP_MODE' => getenv('APP_MODE'),
+		'dot_env_file' => $dot_env_file,
 		'CONSTANTS' => [
 				'DB_HOST' => DB_HOST,
 				'DB_NAME' => DB_NAME,
