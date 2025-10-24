@@ -39,7 +39,7 @@ services:
     build:
       context: .
       args:
-        ENVIRONMENT: development
+      #   ENVIRONMENT: production
     ports:
       - "8080:80"
     environment:

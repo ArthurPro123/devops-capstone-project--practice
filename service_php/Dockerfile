@@ -4,8 +4,7 @@
 FROM php:8.2-apache
 
 
-# Gets overriden in the docker-compose file:
-ARG ENVIRONMENT=production
+ARG ENVIRONMENT=container  # Might be overriden in the docker-compose file.
 
 
 # -------------------------------------------------
