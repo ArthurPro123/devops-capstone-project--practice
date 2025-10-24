@@ -35,7 +35,7 @@ clean-up: ## Cleans up Docker containers and volumes
 	@echo "Cleaning up..."
 	$(COMPOSE) down -v
 
-.PHONY: restart
+.PHONY: re-run
 restart: clean-up run   ## Restart the stack
 
 .PHONY: logs
