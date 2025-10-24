@@ -38,8 +38,8 @@ services:
   php:
     build:
       context: .
-      args:
-      #   ENVIRONMENT: production
+      # args:
+      #   ENVIRONMENT: production # (Is set to container in Dockerfile)
     ports:
       - "8080:80"
     environment:
