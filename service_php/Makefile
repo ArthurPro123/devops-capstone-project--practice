@@ -66,8 +66,6 @@ restart-db: ## Restarts MySQL in Docker (preserves data)
 .PHONY: tests
 tests: ## Runs PHPUnit tests using host's PHPUnit
 #
-	@echo "Running PHPUnit tests..."
-	@docker compose exec php /usr/local/bin/php /opt/lampp/bin/phpunit --verbose --colors=always
-#
-
+	@echo "Running PHPUnit tests using host's PHPUnit..."
+	@/opt/lampp/bin/phpunit --verbose --colors=always
 

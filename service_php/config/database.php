@@ -48,25 +48,20 @@ define('DB_NAME', getenv('DB_NAME'));
 
 // --- For Debugging ---
 
-$raw = $_GET['request'] ?? '';
-$path2 = $raw ? explode('/', trim($raw, '/')) : [];
-
 $debugging_information = [
-		'path1' => isset($_SERVER['PATH_INFO']) ? explode('/', trim($_SERVER['PATH_INFO'], '/')) : [],
-		'path2' => $path2,
+		'path' => isset($_SERVER['PATH_INFO']) ? explode('/', trim($_SERVER['PATH_INFO'], '/')) : [],
 		'dot_env_file' => isset($dot_env_file) ? $dot_env_file : 'is not set',
 		'CONSTANTS' => [
-				'(env) APP_MODE'   => getenv('APP_MODE'),
-				'(env) DB_HOST'    => getenv('DB_HOST'),
+				'(env) APP_MODE'   => '*** ' . getenv('APP_MODE') . ' ***',
+				'(env) DB_HOST'    => '*** ' . getenv('DB_HOST')  . ' ***',
 				'(env) DB_NAME'    => getenv('DB_NAME'),
 				'(env) DB_USER'    => getenv('DB_USER'),
-				'(env) DB_PASS'    => getenv('DB_PASS'),
+				'(env) DB_PASS'    => '*** ' . getenv('DB_PASS')  . ' ***',
 				'(env) MYSQL_PORT' => getenv('MYSQL_PORT'),
-				'(env) MYSQL_ALLOW_EMPTY_ROOT_PASSWORD' => getenv('MYSQL_ALLOW_EMPTY_ROOT_PASSWORD'),
 		]
 ];
-
 // --- End of For Debugging ---
+
 
 // Create connection
 function getDBConnection() {
