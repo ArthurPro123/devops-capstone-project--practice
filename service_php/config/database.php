@@ -46,8 +46,7 @@ define('DB_NAME', getenv('DB_NAME'));
 
 
 
-// --- Debugging ---
-header("Content-Type: application/json");
+// --- For Debugging ---
 
 $raw = $_GET['request'] ?? '';
 $path2 = $raw ? explode('/', trim($raw, '/')) : [];
@@ -67,9 +66,7 @@ $debugging_information = [
 		]
 ];
 
-echo json_encode($debugging_information);
-exit;
-// --- End of Debugging ---
+// --- End of For Debugging ---
 
 // Create connection
 function getDBConnection() {

@@ -3,8 +3,10 @@
 # -------------------------------------------------
 FROM php:8.2-apache
 
+# Environment variables are not visible to the Dockerfile during the build phase,
+# need to use ARG:
 
-# # ARG ENVIRONMENT=container  # Might be overriden in the docker-compose file.
+ARG APP_MODE=container  # Might be overriden in the docker-compose file.
 
 
 # -------------------------------------------------

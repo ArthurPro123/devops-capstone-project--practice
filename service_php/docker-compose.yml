@@ -38,8 +38,9 @@ services:
   php:
     build:
       context: .
-      # args:
-        # APP_MODE: ${APP_MODE:container}
+      args:
+        APP_MODE: ${APP_MODE} # Use this argument, as the APP_MODE *environment variable*
+                              # won't be available to the Dockerfile during the build phase.
     ports:
       - "8080:80"
     environment:

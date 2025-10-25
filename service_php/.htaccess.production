@@ -11,9 +11,8 @@ RewriteEngine On
 RewriteBase /
 
 # Disable directory listing
-# # Options -Indexes
+Options -Indexes
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ src/index.php/$1 [L,QSA] # Original, with the slash.
-# #RewriteRule ^(.*)$ src/index.php$1 [L,QSA]
+RewriteRule ^(.*)$ src/index.php/$1 [L,QSA]

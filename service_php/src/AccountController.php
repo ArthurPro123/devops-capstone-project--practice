@@ -1,10 +1,5 @@
 <?php
 
-ini_set('display_errors', 1); # #
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
 require_once __DIR__ . '/Account.php';
 header("Content-Type: application/json");
 
@@ -32,8 +27,11 @@ if (empty($path)) {
                 'health' => '/health',
                 'accounts' => '/accounts',
                 'account' => '/accounts/{id}'
-            ]
-        ]);
+            ],
+						'additional_information' => $debugging_information
+        ]
+				
+				);
         exit;
     }
 } else {
@@ -51,10 +49,12 @@ if (empty($path)) {
                     if (isset($path[1]) && is_numeric($path[1])) {
                         // GET /accounts/{id}
                         $result = $account->getById($path[1]);
+												$result['additional_information'] = $debugging_information;
                         echo json_encode($result);
                     } else {
                         // GET /accounts
                         $result = $account->getAll();
+												$result['additional_information'] = $debugging_information;
                         echo json_encode($result);
                     }
                     break;
