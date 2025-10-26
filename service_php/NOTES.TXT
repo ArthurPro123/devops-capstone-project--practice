@@ -1,9 +1,0 @@
-
-# ENVIRONMENT VARIABLE MAPPINGS 
-#
-# The environment variables defined in the selected .env file (specified in the Makefile) 
-# are mapped to the MySQL service in 'docker-compose.yml' as follows:
-#
-#    - MYSQL_DATABASE:      Gets its value from ${DB_NAME}
-#    - MYSQL_USER:          Gets its value from ${DB_USER}
-#      ...

@@ -1,6 +1,0 @@
-Rebuild:
-docker compose --env-file env/.env.development build
-
-docker exec -it service_php-php-1 /bin/bash
-docker exec -it 87e2b4a2f70a /bin/sh
-
