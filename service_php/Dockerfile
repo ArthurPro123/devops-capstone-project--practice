@@ -6,7 +6,9 @@ FROM php:8.2-apache
 # Environment variables are not visible to the Dockerfile during the build phase,
 # need to use ARG:
 
-ARG APP_MODE=container  # Might be overriden in the docker-compose file.
+# Can be overriden in the docker-compose file:
+ARG APP_MODE_ARG=container
+ENV APP_MODE=container
 
 
 # -------------------------------------------------
@@ -52,8 +54,8 @@ COPY config/  ./config/
 # -------------------------------------------------
 # Environment‑specific files
 # -------------------------------------------------
-COPY .htaccess.${APP_MODE}  .htaccess
-COPY  env/.env.${APP_MODE}  ./env/
+COPY .htaccess.${APP_MODE_ARG}  .htaccess
+COPY  env/.env.${APP_MODE_ARG}  ./env/
 
 # Override `Options -Indexes` (in .htaccess) that disables directory listing,
 # by copying the custom Apache config file to reveal directories (for debugging):

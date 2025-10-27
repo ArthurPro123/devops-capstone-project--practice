@@ -25,7 +25,7 @@ curl -X POST -H "Content-Type: application/json" -d '{
 *** Useful Commands ***
 
 # Re-build:
-docker compose --env-file env/.env.development build
+docker compose --env-file env/.env.container build
 
 # Run a shell inside the container:
 docker exec -it service_php-php-1 /bin/bash
