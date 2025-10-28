@@ -15,17 +15,17 @@ jobs:
         env:
           MYSQL_DATABASE: account_microservice_db
           MYSQL_USER: root
-          MYSQL_ROOT_PASSWORD: AS400A
-          MYSQL_PASSWORD: AS400A
+          MYSQL_ROOT_PASSWORD: AE_U8_qGGHk3
+          MYSQL_PASSWORD: AE_U8_qGGHk3
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    # env:
-      # DB_NAME: account_microservice_db
-      # DB_USER: root
-      # DB_PASS: AS400A
-      # DB_HOST: 127.0.0.1
+    env:
+      DB_NAME: account_microservice_db
+      DB_USER: root
+      DB_PASS: AE_U8_qGGHk3
+      DB_HOST: 127.0.0.1
       # DB_HOST: mysql
 
     steps:
