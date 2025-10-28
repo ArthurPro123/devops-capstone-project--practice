@@ -29,6 +29,8 @@ docker compose --env-file env/.env.container build
 
 # Run a shell inside the container:
 docker exec -it service_php-php-1 /bin/bash
+docker exec -it service_php-mysql-1 /bin/sh
+
 
 
 *** ENVIRONMENT VARIABLE MAPPINGS *** 
