@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     services:
       mysql:
-        image: mysql:8.0
+        # image: mysql:8.0
+        image: yobasystems/alpine-mariadb:11.4.8
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: account_microservice_db
