@@ -22,7 +22,7 @@ jobs:
       DB_NAME: account_microservice_db
       DB_USER: root
       DB_PASS: AE_U8_qGGHk3
-      DB_HOST: mysql  # Use the service name as the host
+      DB_HOST: 127.0.0.1  # Use localhost as the host
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
         run: composer install -n --prefer-dist
       - name: Initialize database
         run: |
-          mysql -h mysql -P 3306 -u root -pAE_U8_qGGHk3 account_microservice_db < service_php/init-db.sql
+          mysql -h 127.0.0.1 -P 3306 -u root -pAE_U8_qGGHk3 account_microservice_db < service_php/init-db.sql
       - name: Run PHPUnit tests
         working-directory: ./service_php
         run: vendor/bin/phpunit -v --colors=always
