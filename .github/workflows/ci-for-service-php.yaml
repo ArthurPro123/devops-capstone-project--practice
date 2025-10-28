@@ -1,11 +1,9 @@
 name: PHP CI
-
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
 jobs:
   test-and-lint:
     runs-on: ubuntu-latest
@@ -20,36 +18,28 @@ jobs:
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     env:
       DB_NAME: account_microservice_db
       DB_USER: root
       DB_PASS: AE_U8_qGGHk3
-      DB_HOST: 127.0.0.1
-      # DB_HOST: mysql
-
+      DB_HOST: mysql  # Use the service name as the host
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
           extensions: mysqli
           coverage: none
-
       - name: Install Composer dependencies
         working-directory: ./service_php
         run: composer install -n --prefer-dist
-
       - name: Initialize database
         run: |
-          mysql -h 127.0.0.1 -P 3306 -u root -proot account_microservice_db < service_php/init-db.sql
-
+          mysql -h mysql -P 3306 -u root -pAE_U8_qGGHk3 account_microservice_db < service_php/init-db.sql
       - name: Run PHPUnit tests
         working-directory: ./service_php
         run: vendor/bin/phpunit -v --colors=always
-
       - name: Run PHP linting
         run: find service_php/src/ -name "*.php" -exec php -l {} \;
