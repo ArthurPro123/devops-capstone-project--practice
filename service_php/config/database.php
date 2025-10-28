@@ -50,7 +50,7 @@ define('DB_NAME', getenv('DB_NAME'));
 
 $debugging_information = [
 		'path' => isset($_SERVER['PATH_INFO']) ? explode('/', trim($_SERVER['PATH_INFO'], '/')) : [],
-		'dot_env_file' => isset($dot_env_file) ? $dot_env_file : 'is not set',
+		'dot_env_file' => '*** ' . (isset($dot_env_file) ? $dot_env_file : 'is not set') . ' ***',
 		'CONSTANTS' => [
 				'(env) APP_MODE'   => '*** ' . getenv('APP_MODE') . ' ***',
 				'(env) DB_HOST'    => '*** ' . getenv('DB_HOST')  . ' ***',

@@ -8,6 +8,7 @@ FROM php:8.2-apache
 
 # Can be overriden in the docker-compose file:
 ARG APP_MODE_ARG=container
+# When using the APP_MODE name for the ARG (the same as the environment variable), it didn't work.
 
 
 # -------------------------------------------------

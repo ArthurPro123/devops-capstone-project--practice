@@ -31,6 +31,10 @@ docker compose --env-file env/.env.container build
 docker exec -it service_php-php-1 /bin/bash
 docker exec -it service_php-mysql-1 /bin/sh
 
+cd ../../ && sudo rm -Rfv devops-capstone-project--practice/ && \
+   git clone https://github.com/$GITHUB_ACCOUNT/$PROJECT_DIR.git && \
+    cd devops-capstone-project--practice/service_php && clear; pwd
+
 
 
 *** ENVIRONMENT VARIABLE MAPPINGS *** 
