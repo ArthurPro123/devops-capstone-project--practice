@@ -35,6 +35,16 @@ jobs:
       - name: Install Composer dependencies
         working-directory: ./service_php
         run: composer install -n --prefer-dist
+      - name: Wait for MariaDB to be ready
+        run: |
+          for i in {1..10}; do
+            if mysql -h 127.0.0.1 -P 3306 -u root -pAE_U8_qGGHk3 -e "SELECT 1" >/dev/null 2>&1; then
+              echo "MariaDB is ready!"
+              break
+            fi
+            echo "Waiting for MariaDB to be ready..."
+            sleep 5
+          done
       - name: Initialize database
         run: |
           mysql -h 127.0.0.1 -P 3306 -u root -pAE_U8_qGGHk3 account_microservice_db < service_php/init-db.sql
@@ -46,12 +56,17 @@ jobs:
         working-directory: ./service_php
         run: |
           php -r "
-            require_once 'config/database.php';
-            \$conn = getDBConnection();
+            \$host = getenv('DB_HOST') ?: '127.0.0.1';
+            \$user = getenv('DB_USER') ?: 'root';
+            \$pass = getenv('DB_PASS') ?: 'AE_U8_qGGHk3';
+            \$dbname = getenv('DB_NAME') ?: 'account_microservice_db';
+            echo \"Connecting to \$host as \$user...\n\";
+            \$conn = new mysqli(\$host, \$user, \$pass, \$dbname);
             if (\$conn->connect_error) {
                 die('Database connection failed: ' . \$conn->connect_error);
             } else {
                 echo 'Database connection successful!';
+                \$conn->close();
             }
           "
       - name: Run PHPUnit tests
