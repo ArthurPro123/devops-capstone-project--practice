@@ -38,7 +38,7 @@ jobs:
 
       - name: Initialize database
         run: |
-          mysql -h 127.0.0.1 -P 3306 -u root -proot account_microservice_db < service_php/init.sql
+          mysql -h 127.0.0.1 -P 3306 -u root -proot account_microservice_db < service_php/init-db.sql
 
       - name: Run PHPUnit tests
         working-directory: ./service_php
