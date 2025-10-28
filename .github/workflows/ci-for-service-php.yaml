@@ -22,7 +22,7 @@ jobs:
       DB_NAME: account_microservice_db
       DB_USER: root
       DB_PASS: AE_U8_qGGHk3
-      DB_HOST: 127.0.0.1  # Use localhost as the host
+      DB_HOST: 127.0.0.1
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -38,8 +38,24 @@ jobs:
       - name: Initialize database
         run: |
           mysql -h 127.0.0.1 -P 3306 -u root -pAE_U8_qGGHk3 account_microservice_db < service_php/init-db.sql
+      - name: Debug environment and database
+        working-directory: ./service_php
+        run: |
+          echo "DB_HOST: $DB_HOST"
+          echo "DB_USER: $DB_USER"
+          echo "DB_PASS: $DB_PASS"
+          echo "DB_NAME: $DB_NAME"
+          php -r "
+            \$conn = new mysqli('$DB_HOST', '$DB_USER', '$DB_PASS', '$DB_NAME');
+            if (\$conn->connect_error) {
+                die('Database connection failed: ' . \$conn->connect_error);
+            } else {
+                echo 'Database connection successful!';
+            }
+          "
       - name: Run PHPUnit tests
         working-directory: ./service_php
-        run: vendor/bin/phpunit -v --colors=always
+        run: vendor/bin/phpunit -v --debug --colors=always 2>&1
       - name: Run PHP linting
         run: find service_php/src/ -name "*.php" -exec php -l {} \;
+
