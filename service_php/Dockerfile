@@ -8,7 +8,6 @@ FROM php:8.2-apache
 
 # Can be overriden in the docker-compose file:
 ARG APP_MODE_ARG=container
-ENV APP_MODE=container
 
 
 # -------------------------------------------------
