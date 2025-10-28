@@ -2,12 +2,6 @@
 
 define('APP_MODE', (getenv('APP_MODE') ?: 'development'));
 
-/* $host = substr($_SERVER['HTTP_HOST'], 0, 5); */
-/* if (in_array($host, array('local', '127.0', '192.1'))) { */
-/* 	DEFINE('LOCAL', true); */
-/* } else { */
-/* 	DEFINE('LOCAL', false); */
-/* } */
 
 // In the development mode the environment variables won't be provided,
 // so they need to be set:

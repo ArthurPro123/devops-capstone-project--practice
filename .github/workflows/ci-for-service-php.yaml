@@ -38,15 +38,16 @@ jobs:
       - name: Initialize database
         run: |
           mysql -h 127.0.0.1 -P 3306 -u root -pAE_U8_qGGHk3 account_microservice_db < service_php/init-db.sql
-      - name: Debug environment and database
+      - name: Verify database initialization
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root -pAE_U8_qGGHk3 -e "SHOW DATABASES;"
+          mysql -h 127.0.0.1 -P 3306 -u root -pAE_U8_qGGHk3 -e "USE account_microservice_db; SHOW TABLES;"
+      - name: Debug PHP database connection
         working-directory: ./service_php
         run: |
-          echo "DB_HOST: $DB_HOST"
-          echo "DB_USER: $DB_USER"
-          echo "DB_PASS: $DB_PASS"
-          echo "DB_NAME: $DB_NAME"
           php -r "
-            \$conn = new mysqli('$DB_HOST', '$DB_USER', '$DB_PASS', '$DB_NAME');
+            require_once 'config/database.php';
+            \$conn = getDBConnection();
             if (\$conn->connect_error) {
                 die('Database connection failed: ' . \$conn->connect_error);
             } else {
@@ -58,4 +59,3 @@ jobs:
         run: vendor/bin/phpunit -v --debug --colors=always 2>&1
       - name: Run PHP linting
         run: find service_php/src/ -name "*.php" -exec php -l {} \;
-
