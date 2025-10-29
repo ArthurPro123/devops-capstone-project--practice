@@ -74,3 +74,4 @@ jobs:
         run: vendor/bin/phpunit -v --debug --colors=always 2>&1
       - name: Run PHP linting
         run: find service_php/src/ -name "*.php" -exec php -l {} \;
+
