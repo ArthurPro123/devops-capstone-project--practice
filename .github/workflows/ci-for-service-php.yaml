@@ -60,12 +60,13 @@ jobs:
             \$user = getenv('DB_USER') ?: 'root';
             \$pass = getenv('DB_PASS') ?: 'AE_U8_qGGHk3';
             \$dbname = getenv('DB_NAME') ?: 'account_microservice_db';
-            echo \"Connecting to \$host as \$user...\n\";
-            \$conn = new mysqli(\$host, \$user, \$pass, \$dbname);
+            echo \"Connecting to \$host:3306 as \$user...\n\";
+            \$conn = new mysqli(\$host, \$user, \$pass, \$dbname, 3306);
             if (\$conn->connect_error) {
                 die('Database connection failed: ' . \$conn->connect_error);
             } else {
                 echo 'Database connection successful!';
+                echo \"Host info: \" . \$conn->host_info;
                 \$conn->close();
             }
           "
@@ -74,4 +75,3 @@ jobs:
         run: vendor/bin/phpunit -v --debug --colors=always 2>&1
       - name: Run PHP linting
         run: find service_php/src/ -name "*.php" -exec php -l {} \;
-
