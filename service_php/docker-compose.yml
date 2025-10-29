@@ -50,7 +50,8 @@ services:
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
 
-      MYSQL_PORT: ${MYSQL_PORT}  # Used in the debugging section of the php app.
+      MYSQL_PORT: ${MYSQL_PORT}  # Used in the debugging section of the PHP app 
+                                 # and for connecting to the database in the GitHub workflow.
     volumes:
       #
       # Overrides those files in Dockerfile during development for live reloading.
